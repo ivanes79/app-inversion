@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block section %}
+    <nav class="container">
+        <h1>COMPRA / VENTA / INTERCAMBIO</h1>
+    </nav>
+        <nav class="container">
+            <section class="container">  
+                <ul>
+                    <li><a href="/">movimientos</a></li>
+                    <li><a class="inactivo">purchase</a></li>
+                    <li><a href="/status">status</a></li>
+                </ul>
+                <form action="/purchase" method = "POST">
+                    <label> FROM :</label>
+                    <select name="value_from" value="{{form.value_from}}">
+                        <option value="EUR">EUR</option>
+                        <option value="BTC">BTC</option>
+                        <option value="ETH">ETH</option>
+                        <option value="USDT">USDT</option>
+                        <option value="BNB">BNB</option>
+                        <option value="XRP">XRP</option>
+                        <option value="ADA">ADA</option>
+                        <option value="SOL">SOL</option>
+                        <option value="DOT">DOT</option>
+                        <option value="MATIC">MATIC</option>
+                    </select>
+                    <label> QUANTITY FROM</label>
+                    <input type="number" name="from_q" value="{{form.from_q}}">
+                    <label> TO :</label>
+                        <select name="value_to" value="{{form.value_to}}">
+                            <option value="EUR">EUR</option>
+                            <option value="BTC">BTC</option>
+                            <option value="ETH">ETH</option>
+                            <option value="USDT">USDT</option>
+                            <option value="BNB">BNB</option>
+                            <option value="XRP">XRP</option>
+                            <option value="ADA">ADA</option>
+                            <option value="SOL">SOL</option>
+                            <option value="DOT">DOT</option>
+                            <option value="MATIC">MATIC</option>
+                        </select>
+                        <label> QUANTITY TO</label>
+                        <input type="number" name="to_q" value="{{form.to_q}}">
+                        <BR></BR>
+                        <label >P.U</label>
+                        <input type="number" name="P.U" value="{{form.P_U}}" >
+                        <BR></BR>
+                        <input type="submit" name="calcular" value="calcular">
+                        <input type="submit" name="comprar" value="comprar">
+                </form>
+               
+            <!--<article>
+                    <ul>
+                    {% for item in msgError %}     
+                            <li style = "color:red">{{item}}</li>
+                    {% endfor %}     
+                    </ul>
+            </article>
+            -->
+        </nav>        
+{% endblock%} 

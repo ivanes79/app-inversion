@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block section %}
+
+    <nav class="container">
+    <section class="container">  
+            <ul>
+            <li><a  class="inactivo">movimientos</a></li>
+            <li><a href="/purchase">purchase</a></li>
+            <li><a href="/status">status</a></li>
+            
+            </ul>
+    </nav>
+    <nav class="container">
+    <h1>MOVIMIENTOS</h1>
+    </nav>    
+        <table role="grid">
+                <thead>
+                    <tr>
+                        <th>Fecha</th>
+                        <th>hora</th>
+                        <th>moneda_from</th>
+                        <th>quantity_from</th>
+                        <th>moneda_to</th>
+                        <th>quantity_to</th>
+                    </tr>
+
+                </thead>
+                <tbody>
+
+                    {% for item in data %}
+                    <tr>
+                        
+                        <td>{{item.date}}</td>
+                        <td>{{item.time}}</td>
+                        <td>{{item.Moneda_from}}</td>
+                        <td>{{item.Quantity_from}}</td>
+                        <td>{{item.Moneda_to}}</td>
+                        <td>{{item.Quantity_to}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+        </table>
+    </section>    
+{% endblock %}
