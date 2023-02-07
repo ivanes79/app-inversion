@@ -2,7 +2,7 @@
 
 {% block section %}
     <nav class="container">
-        <h1>ESTADO DE INVERSIONES</h1>
+        <h1>MYCRIPTO</h1>
         </nav>
         <nav class="container">
         <section class="container">  
@@ -11,6 +11,16 @@
                 <li><a href="/purchase">purchase</a></li>
                 <li><a class="inactivo">status</a></li>
             </ul>
+            <div>
+                <h1>ESTADO DE LA INVERSION</h1>
+            </div>
+            <article>
+                    <ul>
+                    
+                            <li style = "color:red">{{data}}</li>
+                         
+                    </ul>
+            </article>
         </section> 
     </nav>
 {% endblock%}

@@ -14,31 +14,31 @@
                 <form action="/purchase" method = "POST">
                     <label> FROM :</label>
                     <select name="value_from" value="{{form.value_from}}">
-                        <option value="EUR">EUR</option>
-                        <option value="BTC">BTC</option>
-                        <option value="ETH">ETH</option>
-                        <option value="USDT">USDT</option>
-                        <option value="BNB">BNB</option>
-                        <option value="XRP">XRP</option>
-                        <option value="ADA">ADA</option>
-                        <option value="SOL">SOL</option>
-                        <option value="DOT">DOT</option>
-                        <option value="MATIC">MATIC</option>
+                        <option value="EUR" {% if form.value_from == "EUR" %} selected {% endif %}>EUR</option>
+                        <option value="BTC" {% if form.value_from == "BTC" %} selected {% endif %}>BTC</option>
+                        <option value="ETH" {% if form.value_from == "ETH" %} selected {% endif %}>ETH</option>
+                        <option value="USDT" {% if form.value_from == "USDT" %} selected {% endif %}>USDT</option>
+                        <option value="BNB"{% if form.value_from == "BNB" %} selected {% endif %}>BNB</option>
+                        <option value="XRP" {% if form.value_from == "XRP" %} selected {% endif %}>XRP</option>
+                        <option value="ADA" {% if form.value_from == "ADA" %} selected {% endif %}>ADA</option>
+                        <option value="SOL" {% if form.value_from == "SOL" %} selected {% endif %}>SOL</option>
+                        <option value="DOT" {% if form.value_from == "DOT" %} selected {% endif %}>DOT</option>
+                        <option value="MATIC" {% if form.value_from == "MATIC" %} selected {% endif %}>MATIC</option>
                     </select>
                     <label> QUANTITY FROM</label>
                     <input type="number" name="from_q" value="{{form.from_q}}">
                     <label> TO :</label>
                         <select name="value_to" value="{{form.value_to}}">
-                            <option value="EUR">EUR</option>
-                            <option value="BTC">BTC</option>
-                            <option value="ETH">ETH</option>
-                            <option value="USDT">USDT</option>
-                            <option value="BNB">BNB</option>
-                            <option value="XRP">XRP</option>
-                            <option value="ADA">ADA</option>
-                            <option value="SOL">SOL</option>
-                            <option value="DOT">DOT</option>
-                            <option value="MATIC">MATIC</option>
+                        <option value="EUR" {% if form.value_to == "EUR" %} selected {% endif %}>EUR</option>
+                        <option value="BTC" {% if form.value_to == "BTC" %} selected {% endif %}>BTC</option>
+                        <option value="ETH" {% if form.value_to == "ETH" %} selected {% endif %}>ETH</option>
+                        <option value="USDT" {% if form.value_to == "USDT" %} selected {% endif %}>USDT</option>
+                        <option value="BNB"{% if form.value_to == "BNB" %} selected {% endif %}>BNB</option>
+                        <option value="XRP" {% if form.value_to == "XRP" %} selected {% endif %}>XRP</option>
+                        <option value="ADA" {% if form.value_to == "ADA" %} selected {% endif %}>ADA</option>
+                        <option value="SOL" {% if form.value_to == "SOL" %} selected {% endif %}>SOL</option>
+                        <option value="DOT" {% if form.value_to == "DOT" %} selected {% endif %}>DOT</option>
+                        <option value="MATIC" {% if form.value_to == "MATIC" %} selected {% endif %}>MATIC</option>
                         </select>
                         <label> QUANTITY TO</label>
                         <input type="number" name="to_q" value="{{form.to_q}}">
