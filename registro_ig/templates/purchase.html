@@ -26,7 +26,7 @@
                         <option value="MATIC" {% if form.value_from == "MATIC" %} selected {% endif %}>MATIC</option>
                     </select>
                     <label> QUANTITY FROM</label>
-                    <input type="number" name="from_q" value="{{form.from_q}}">
+                    <input type="number" name="from_q" value="{{form.from_q}}" required>
                     <label> TO :</label>
                         <select name="value_to" value="{{form.value_to}}">
                         <option value="EUR" {% if form.value_to == "EUR" %} selected {% endif %}>EUR</option>
@@ -40,13 +40,14 @@
                         <option value="DOT" {% if form.value_to == "DOT" %} selected {% endif %}>DOT</option>
                         <option value="MATIC" {% if form.value_to == "MATIC" %} selected {% endif %}>MATIC</option>
                         </select>
+                        <BR></BR>
+                        <input type="submit" name="calcular" value="calcular">
                         <label> QUANTITY TO</label>
                         <input type="number" name="to_q" value="{{form.to_q}}">
                         <BR></BR>
                         <label >P.U</label>
                         <input type="number" name="P.U" value="{{form.P_U}}" >
                         <BR></BR>
-                        <input type="submit" name="calcular" value="calcular">
                         <input type="submit" name="comprar" value="comprar">
                 </form>
                

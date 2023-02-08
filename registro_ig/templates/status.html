@@ -14,13 +14,22 @@
             <div>
                 <h1>ESTADO DE LA INVERSION</h1>
             </div>
-            <article>
-                    <ul>
-                    
-                            <li style = "color:red">{{data}}</li>
-                         
-                    </ul>
-            </article>
+            <table role="grid">
+                <tr>
+                    <th>INVERTIDO : </th>
+                    <TD>{{compras}}</TD>
+                </tr>
+                <tr>
+                    <th>RECUPERADO : </th>
+                    <TD>{{ventas}}</TD>
+                </tr>
+                <tr>
+                    <th>VALOR DE COMPRA : </th>
+                    <TD>{{valor_de_compra}}</TD>
+                </tr>
+
+
+            </table>
         </section> 
     </nav>
 {% endblock%}

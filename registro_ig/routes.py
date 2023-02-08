@@ -1,8 +1,8 @@
 from registro_ig import app
 from flask import render_template,request,url_for,redirect
 from config import *
-from registro_ig.models import select_all,change_coins,insert,invertido,sales,Q_criptos
-import datetime
+from registro_ig.models import select_all,change_coins,insert,invertido,recuperado,change_coins_to_EUR
+from datetime import datetime
 
 
 
@@ -48,26 +48,13 @@ def operate():
             return render_template("purchase.html", form=list_request)
 
         if 'comprar'in request.form:
-            '''
-            insert(["25-12-2022",
-                    "10:00:00",
-                    request.form["value_from"],
-                    request.form["from_q"],
-                    request.form["value_from"],
-                    request.form["to_q"] ])
-                    
-            return redirect(url_for("index"))
+ 
+            now = datetime.now()
 
-            date = datetime.date.today()
             
-            time = datetime.date.today()
-
-
-            '''
-
             if request.form['value_from'] == "EUR":
-                insert(["01-01-2023",
-                    "10:00:00",
+                insert([now.strftime("%Y:%m:%d"),
+                    now.strftime("%H:%M:%S"),
                     request.form["value_from"],
                     request.form["from_q"],
                     request.form["value_from"],
@@ -81,12 +68,12 @@ def operate():
                     print("Esta compra no se puede realizar")
 
                 else:
-                    insert(["01-01-2023",
-                    "10:00:00",
-                    request.form["value_from"],
-                    request.form["from_q"],
-                    request.form["value_from"],
-                    request.form["to_q"] ])
+                    insert([now.strftime("%Y:%m:%d"),
+                        now.strftime("%H:%M:%S"),
+                        request.form["value_from"],
+                        request.form["from_q"],
+                        request.form["value_from"],
+                        request.form["to_q"] ])
 
                     return redirect(url_for("index"))
             
@@ -102,10 +89,14 @@ def operate():
 @app.route("/status")
 def status():
 
-    cripto = Q_criptos()
+    ventas=recuperado()
+    compras=invertido()
+    valor_de_compra=compras-ventas
+   
 
 
-    return render_template("status.html",data=cripto)
+
+    return render_template("status.html",compras=compras,ventas=ventas,valor_de_compra=valor_de_compra)
     '''
     Esta pantalla mostrará tres valores relativos al valor en euros de nuestra cartera de criptomonedas, a saber:
     Invertido: Es el total de euros con el que se han comprado criptos. Se calcula como 
