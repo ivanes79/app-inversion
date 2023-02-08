@@ -11,6 +11,13 @@
                     <li><a class="inactivo">purchase</a></li>
                     <li><a href="/status">status</a></li>
                 </ul>
+                <article>
+                    <ul>
+                            
+                        <li class="error">{{msgError}}</li>
+                           
+                    </ul>
+                </article>
                 <form action="/purchase" method = "POST">
                     <label> FROM :</label>
                     <select name="value_from" value="{{form.value_from}}">
@@ -51,13 +58,7 @@
                         <input type="submit" name="comprar" value="comprar">
                 </form>
                
-            <!--<article>
-                    <ul>
-                    {% for item in msgError %}     
-                            <li style = "color:red">{{item}}</li>
-                    {% endfor %}     
-                    </ul>
-            </article>
-            -->
+
+            
         </nav>        
 {% endblock%} 

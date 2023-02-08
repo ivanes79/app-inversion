@@ -1,7 +1,7 @@
 from registro_ig import app
 from flask import render_template,request,url_for,redirect
 from config import *
-from registro_ig.models import select_all,change_coins,insert,invertido,recuperado,change_coins_to_EUR
+from registro_ig.models import select_all,change_coins,insert,invertido,recuperado,criptos_compradas,valor_actual_cripto
 from datetime import datetime
 
 
@@ -48,6 +48,24 @@ def operate():
             return render_template("purchase.html", form=list_request)
 
         if 'comprar'in request.form:
+
+            moneda1=request.form['value_from']
+            moneda2=request.form['value_to']
+
+            cambio = change_coins(moneda1,moneda2)
+            
+
+            value_from_q=float(request.form['from_q'])
+
+            valor_pu=value_from_q/cambio
+
+            list_request={
+                "value_from":request.form['value_from'],
+                "from_q":request.form['from_q'],
+                "value_to":request.form['value_to'],
+                "to_q":str(cambio),
+                "P_U":str(valor_pu)
+            }
  
             now = datetime.now()
 
@@ -57,16 +75,20 @@ def operate():
                     now.strftime("%H:%M:%S"),
                     request.form["value_from"],
                     request.form["from_q"],
-                    request.form["value_from"],
+                    request.form["value_to"],
                     request.form["to_q"] ])
 
                 return redirect(url_for("index"))
            
             else :
                 
-                if request.form['from_q'] > Q_criptos(request.form['value_from']):
-                    print("Esta compra no se puede realizar")
+                errores=[]
+                
+                if float(request.form['from_q']) > float(recuperado(request.form['value_from'])): 
+                    errores.append("Moneda insuficiente. Debes comprar menos cantidad")
 
+                    return render_template("purchase.html", msgError=errores, form=list_request)
+                    
                 else:
                     insert([now.strftime("%Y:%m:%d"),
                         now.strftime("%H:%M:%S"),
@@ -77,20 +99,15 @@ def operate():
 
                     return redirect(url_for("index"))
             
-            
-               
-            
-
-
-
-
-
-
 @app.route("/status")
 def status():
 
-    ventas=recuperado()
-    compras=invertido()
+    lista_criptos=criptos_compradas()
+    
+
+
+    ventas=recuperado('EUR')
+    compras=invertido('EUR')
     valor_de_compra=compras-ventas
    
 

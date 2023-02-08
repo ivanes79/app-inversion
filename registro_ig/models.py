@@ -1,6 +1,7 @@
 import sqlite3
 from config import *
 import requests
+from flask import request
 
 
 def select_all():
@@ -58,11 +59,11 @@ def insert(compra):
     con.close()
 
 
-def invertido():
+def invertido(moneda):
     con = sqlite3.connect(INVERSION_DATA)
     cur = con.cursor()
 
-    res = cur.execute("SELECT SUM (Quantity_from) FROM inversiones where Moneda_from = 'EUR' " )
+    res = cur.execute(f"SELECT SUM (Quantity_from) FROM inversiones where Moneda_from = ?",[moneda] )
     filas = res.fetchall()
     columnas= res.description
 
@@ -78,16 +79,17 @@ def invertido():
         resultado.append(dato)
         resultado1 = resultado[0]['SUM (Quantity_from)']
         resultado1 = float(resultado1)
-
+    
     con.close()
+   
     return resultado1
 
 
-def recuperado():
+def recuperado(moneda):
     con = sqlite3.connect(INVERSION_DATA)
     cur = con.cursor()
 
-    res = cur.execute("SELECT SUM(Quantity_to) FROM inversiones WHERE Moneda_to = 'EUR' " )
+    res = cur.execute(f"SELECT SUM(Quantity_to) FROM inversiones WHERE Moneda_to == ?",[moneda] )
 
     filas = res.fetchall()#capturo las filas de datos
     columnas= res.description#capturo los nombres de columnas
@@ -116,16 +118,58 @@ def criptos_compradas():
     con = sqlite3.connect(INVERSION_DATA)
     cur = con.cursor()
 
-    criptos_compradas=cur.execute(f"SELECT DISTINCT Moneda_to FROM inversiones WHERE quantity_to != 0 AND Moneda_to != 'EUR' " ) 
+    res=cur.execute(f"SELECT DISTINCT Moneda_to FROM inversiones WHERE quantity_to != 0 AND Moneda_to != 'EUR' " ) 
 
-    lista_criptos=criptos_compradas.fetchall()
+    filas=res.fetchall()
+    columnas= res.description
+    resultado =[]
 
-    return lista_criptos
+    for fila in filas:
+        dato={}
+        posicion=0
 
-    #vendido = cur.execute(f"SELECT SUM(Quantity_to) FROM inversiones WHERE Moneda_to = {cripto} " )
+        for campo in columnas:
+            dato[campo[0]]=fila[posicion]
+            posicion += 1
+        resultado.append(dato)
+        
 
-     
+        
+    monedas = []
+    moneda = 0
+        
+    for moneda in range(len(resultado)):
+        
+        cripto = resultado[moneda]
+        monedas.append(cripto['Moneda_to'])
+        moneda+=1
 
+    con.close()
+    
+    return monedas
+
+def valor_actual_cripto(moneda):
+
+    
+    ventas = recuperado(moneda)
+    
+
+   
+    return ventas
+
+def validar_compra():
+    
+    errores=[]
+    if request.form['from_q'] > valor_actual_cripto(request.form['value_q']): 
+        errores.append("Moneda insuficiente. Debes comprar menos cantidad")
+    '''
+    if requestForm['concept'] == "":
+        errores.append("concepto vacio: Introduce un concepto para el registro")
+    if requestForm['quantity'] == "" or float(requestForm['quantity']) == 0.0:
+        errores.append("cantidad vacio o cero: Introduce una cantidad positiva o negativa")  
+    '''
+    return errores
+    
 
 def q_monedas(moneda1):
 
@@ -136,7 +180,7 @@ def q_monedas(moneda1):
 
     compra_cripto = res.fetchall()
    
-
+    
     
 
   
