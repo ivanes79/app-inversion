@@ -148,44 +148,28 @@ def criptos_compradas():
     
     return monedas
 
-def valor_actual_cripto(moneda):
+
 
     
-    ventas = recuperado(moneda)
-    
+
+def valor_actual():
+
+    lista_criptos=criptos_compradas()
+    recuperado_criptos=0
+    for cripto in lista_criptos:
+        cantidad= recuperado(cripto)
+        recuperado_criptos += cantidad  * change_coins_to_EUR(cripto)
+
+    return recuperado_criptos
 
    
-    return ventas
-
-def validar_compra():
-    
-    errores=[]
-    if request.form['from_q'] > valor_actual_cripto(request.form['value_q']): 
-        errores.append("Moneda insuficiente. Debes comprar menos cantidad")
-    '''
-    if requestForm['concept'] == "":
-        errores.append("concepto vacio: Introduce un concepto para el registro")
-    if requestForm['quantity'] == "" or float(requestForm['quantity']) == 0.0:
-        errores.append("cantidad vacio o cero: Introduce una cantidad positiva o negativa")  
-    '''
-    return errores
-    
-
-def q_monedas(moneda1):
-
-    con = sqlite3.connect(INVERSION_DATA)
-    cur = con.cursor()
-
-    res = cur.execute(f"SELECT SUM(quantity_to) FROM inversiones WHERE Moneda_to = {moneda1} " )
-
-    compra_cripto = res.fetchall()
    
     
     
 
   
 
-    con.close()
+   
 
     
     

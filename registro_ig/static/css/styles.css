@@ -24,3 +24,9 @@ ul.errors{
 .inactivo{
     color:rgb(11, 13, 11);
 }
+.oculto{
+    display:none
+}
+.visible{
+    color:rgb(193, 7, 7)
+}

@@ -1,7 +1,7 @@
 from registro_ig import app
 from flask import render_template,request,url_for,redirect
 from config import *
-from registro_ig.models import select_all,change_coins,insert,invertido,recuperado,criptos_compradas,valor_actual_cripto
+from registro_ig.models import select_all,change_coins,insert,invertido,recuperado,criptos_compradas,change_coins_to_EUR,valor_actual
 from datetime import datetime
 
 
@@ -11,7 +11,8 @@ def index():
 
     datos = select_all()
     if datos == "":
-        print("NO HAY MOVIMIENTOS")
+        datos = 'no hay movimientos'
+        return render_template("index.html",pageTitle="Listas",data=datos)
 
     else:
         return render_template("index.html",pageTitle="Listas",data=datos)
@@ -45,7 +46,7 @@ def operate():
                 "P_U":str(valor_pu)
             }
                 
-            return render_template("purchase.html", form=list_request)
+            return render_template("purchase.html", form=list_request , tipo='oculto')
 
         if 'comprar'in request.form:
 
@@ -87,7 +88,7 @@ def operate():
                 if float(request.form['from_q']) > float(recuperado(request.form['value_from'])): 
                     errores.append("Moneda insuficiente. Debes comprar menos cantidad")
 
-                    return render_template("purchase.html", msgError=errores, form=list_request)
+                    return render_template("purchase.html", msgError=errores, form=list_request,tipo='visible')
                     
                 else:
                     insert([now.strftime("%Y:%m:%d"),
@@ -102,18 +103,22 @@ def operate():
 @app.route("/status")
 def status():
 
-    lista_criptos=criptos_compradas()
-    
-
-
     ventas=recuperado('EUR')
     compras=invertido('EUR')
     valor_de_compra=compras-ventas
-   
+    
+    lista_criptos=criptos_compradas()
+    recuperado_criptos=0
+    for cripto in lista_criptos:
+        cantidad= recuperado(cripto)
+        recuperado_criptos += cantidad  * change_coins_to_EUR(cripto)
+
+    
+    
 
 
 
-    return render_template("status.html",compras=compras,ventas=ventas,valor_de_compra=valor_de_compra)
+    return render_template("status.html",compras=compras,ventas=ventas,valor_de_compra=valor_de_compra,valor_actual=recuperado_criptos)
     '''
     Esta pantalla mostrará tres valores relativos al valor en euros de nuestra cartera de criptomonedas, a saber:
     Invertido: Es el total de euros con el que se han comprado criptos. Se calcula como 

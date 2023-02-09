@@ -4,6 +4,33 @@ import requests
 from flask import request
 from registro_ig.models import *
 
+
+lista_criptos=criptos_compradas()
+
+recuperado_criptos=0
+for cripto in lista_criptos:
+    cantidad= recuperado(cripto)
+    recuperado_criptos += cantidad  
+
+
+
+
+
+print(recuperado_criptos)
+'''
+
+lista_criptos=criptos_compradas()
+for cripto in range(len(lista_criptos)):
+    
+    cantidad_cripto= 
+    recuperado_cripto += cantidad_cripto * cambio 
+
+print(cambio)
+
+
+
+
+
 cantidades_criptos=[]
 lista_criptos=criptos_compradas()
 for item in range(len(lista_criptos)):
@@ -14,7 +41,7 @@ for item in range(len(lista_criptos)):
 #cripto = valor_actual_cripto('BTC')
 print(cantidades_criptos)
 
-'''
+
 errores=[]
 if request.form['from_q'] > valor_actual_cripto(request.form['value_q']): 
     errores.append("Moneda insuficiente. Debes comprar menos cantidad")
