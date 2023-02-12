@@ -140,16 +140,6 @@ def criptos_compradas():
 
     
 
-def valor_actual():
-
-    lista_criptos=criptos_compradas()
-    recuperado_criptos=0
-    for cripto in lista_criptos:
-        cantidad= recuperado(cripto)
-        recuperado_criptos += cantidad  * change_coins_to_EUR(cripto)
-
-    return recuperado_criptos
-
 
    
     
