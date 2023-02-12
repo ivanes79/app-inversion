@@ -69,7 +69,7 @@ def operate():
             now = datetime.now()
 
             
-            if request.form['value_from'] == "EUR":
+            if request.form['value_from'] == "EUR" and request.form['value_to'] != "EUR":
                 insert([now.strftime("%Y-%m-%d"),
                         now.strftime("%H:%M:%S"),
                         request.form["value_from"],
@@ -81,10 +81,21 @@ def operate():
            
             else :
                 
+                lista_monedas = criptos_compradas()
                 errores=[]
-                if float(request.form['from_q']) > recuperado(request.form['value_from']):
-                    errores.append("Moneda insuficiente. Debes comprar menos cantidad")
+
+                if request.form['value_from'] == request.form['value_to']:
+                    errores.append("No se puede operar entre las mismas monedas") 
                     return render_template("purchase.html", msgError=errores, form=list_request)
+                
+                if request.form['value_from'] not in lista_monedas:
+                    errores.append("No dispones de ese tipo de cripto")
+                    return render_template("purchase.html", msgError=errores, form=list_request)
+
+                if float(request.form['from_q']) > recuperado(request.form['value_from']):
+                    errores.append("Moneda insuficiente. Debes comprar menos cantidad") 
+                    return render_template("purchase.html", msgError=errores, form=list_request)
+                
                 
                 else:
                     insert([now.strftime("%Y-%m-%d"),
