@@ -150,8 +150,7 @@ def valor_actual():
 
     return recuperado_criptos
 
-def validate_form():
-       pass
+
    
     
     
