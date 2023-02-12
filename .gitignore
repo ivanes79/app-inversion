@@ -3,3 +3,4 @@
 .env
 inversion/
 pruebas.py
+config.py

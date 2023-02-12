@@ -27,18 +27,23 @@
 
                 </thead>
                 <tbody>
-
-                    {% for item in data %}
-                    <tr>
+                    {% if data==[] %}
+                        <h1>No hay movimientos</h1>
                         
-                        <td>{{item.date}}</td>
-                        <td>{{item.time}}</td>
-                        <td>{{item.Moneda_from}}</td>
-                        <td>{{item.Quantity_from}}</td>
-                        <td>{{item.Moneda_to}}</td>
-                        <td>{{item.Quantity_to}}</td>
-                    </tr>
-                    {% endfor %}
+                    {% else %}
+                        {% for item in data %}
+                        <tr>
+                            
+                            <td>{{item.date}}</td>
+                            <td>{{item.time}}</td>
+                            <td>{{item.Moneda_from}}</td>
+                            <td>{{item.Quantity_from}}</td>
+                            <td>{{item.Moneda_to}}</td>
+                            <td>{{item.Quantity_to}}</td>
+                        </tr>
+                        {% endfor %}
+                    {% endif %}
+                    
                 </tbody>
         </table>
     </section>    

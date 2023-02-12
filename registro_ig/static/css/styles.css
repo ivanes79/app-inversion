@@ -24,9 +24,10 @@ ul.errors{
 .inactivo{
     color:rgb(11, 13, 11);
 }
-.oculto{
-    display:none
+
+.verde{
+    color:rgb(9, 159, 36);
 }
-.visible{
-    color:rgb(193, 7, 7)
+.rojo{
+    color:rgb(238, 12, 12);
 }

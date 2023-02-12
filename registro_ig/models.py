@@ -2,18 +2,17 @@ import sqlite3
 from config import *
 import requests
 from flask import request
+from registro_ig.conexion import Conexion
+
 
 
 def select_all():
-    con = sqlite3.connect(INVERSION_DATA)
-    cur = con.cursor()
+    connect = Conexion("select date,time,moneda_from,quantity_from,moneda_to,quantity_to from inversiones;")
 
-    res = cur.execute("select date,time,moneda_from,quantity_from,moneda_to,quantity_to from inversiones;")
+    filas = connect.res.fetchall()    
+    columnas= connect.res.description  
 
-    filas = res.fetchall()    #capturo las filas de datos
-    columnas= res.description   #capturo los nombres de columnas
-
-       #objetivo crear una lista de diccionario con filas y columnas
+       
 
     
     resultado =[]   #lista para guadar diccionario
@@ -27,8 +26,9 @@ def select_all():
             posicion += 1
         resultado.append(dato)
 
+    
 
-    con.close()
+    connect.con.close()
     return resultado
 
 def change_coins(moneda1,moneda2):
@@ -50,22 +50,16 @@ def change_coins_to_EUR(moneda1):
 
 
 def insert(compra):
-    con = sqlite3.connect(INVERSION_DATA)
-    cur = con.cursor()
+    connect = Conexion("insert into inversiones(date,time,Moneda_from,Quantity_from,Moneda_to,Quantity_to) values(?,?,?,?,?,?)",compra)
 
-    cur.execute("insert into inversiones(date,time,Moneda_from,Quantity_from,Moneda_to,Quantity_to) values(?,?,?,?,?,?)",compra)
-
-    con.commit()
-    con.close()
+    connect.con.commit()
+    connect.con.close()
 
 
 def invertido(moneda):
-    con = sqlite3.connect(INVERSION_DATA)
-    cur = con.cursor()
-
-    res = cur.execute(f"SELECT SUM (Quantity_from) FROM inversiones where Moneda_from = ?",[moneda] )
-    filas = res.fetchall()
-    columnas= res.description
+    connect = Conexion(f"SELECT SUM (Quantity_from) FROM inversiones where Moneda_from = ?",[moneda] )
+    filas = connect.res.fetchall()
+    columnas= connect.res.description
 
     resultado =[]
 
@@ -80,19 +74,16 @@ def invertido(moneda):
         resultado1 = resultado[0]['SUM (Quantity_from)']
         resultado1 = float(resultado1)
     
-    con.close()
+    connect.con.close()
    
     return resultado1
 
 
 def recuperado(moneda):
-    con = sqlite3.connect(INVERSION_DATA)
-    cur = con.cursor()
+    connect = Conexion(f"SELECT SUM(Quantity_to) FROM inversiones WHERE Moneda_to == ?",[moneda] )
 
-    res = cur.execute(f"SELECT SUM(Quantity_to) FROM inversiones WHERE Moneda_to == ?",[moneda] )
-
-    filas = res.fetchall()#capturo las filas de datos
-    columnas= res.description#capturo los nombres de columnas
+    filas = connect.res.fetchall()#capturo las filas de datos
+    columnas= connect.res.description#capturo los nombres de columnas
 
     #objetivo crear una lista de diccionario con filas y columnas
 
@@ -110,18 +101,15 @@ def recuperado(moneda):
         resultado2 = resultado[0]['SUM(Quantity_to)']
         resultado2 = float(resultado2)
 
-    con.close()
+    connect.con.close()
     return resultado2
 
 
 def criptos_compradas():
-    con = sqlite3.connect(INVERSION_DATA)
-    cur = con.cursor()
+    connect = Conexion(f"SELECT DISTINCT Moneda_to FROM inversiones WHERE quantity_to != 0 AND Moneda_to != 'EUR' " ) 
 
-    res=cur.execute(f"SELECT DISTINCT Moneda_to FROM inversiones WHERE quantity_to != 0 AND Moneda_to != 'EUR' " ) 
-
-    filas=res.fetchall()
-    columnas= res.description
+    filas=connect.res.fetchall()
+    columnas= connect.res.description
     resultado =[]
 
     for fila in filas:
@@ -144,7 +132,7 @@ def criptos_compradas():
         monedas.append(cripto['Moneda_to'])
         moneda+=1
 
-    con.close()
+    connect.con.close()
     
     return monedas
 
@@ -162,7 +150,8 @@ def valor_actual():
 
     return recuperado_criptos
 
-   
+def validate_form():
+       pass
    
     
     
@@ -174,4 +163,4 @@ def valor_actual():
     
     
 
-    return cantidad_cripto
+   

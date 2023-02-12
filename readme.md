@@ -1,6 +1,6 @@
-# Aplicación Web Ingresos-Gastos
+# Aplicación Web de inversion en criptomonedas
 
-- Programa hecho en python con el framework Flask, App Ingresos Gastos, con motor de base de datos SQLite
+- Programa hecho en python con el framework Flask, App de inversion, con motor de base de datos SQLite
 
 ## En su entorno de python ejecutar el comando
 
@@ -41,4 +41,9 @@ flask --app hello run -p 5001
 ## Comando para lanzar en modo debug y con puerto cambiado
 ```
 flask --app hello --debug run -p 5001
+```
+
+## Base de datos 
+```
+Crear base de datos utilizando create.sql en el directorio data
 ```
