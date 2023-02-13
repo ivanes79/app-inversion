@@ -110,7 +110,19 @@ def operate():
 @app.route("/status")
 def status():
 
-    ventas=recuperado('EUR')
+    
+
+    criptos_to =criptos_compradas()
+
+    
+    ventas=0
+    if 'EUR'not in criptos_compradas():
+        ventas = 0
+    else:
+       ventas = recuperado('EUR')
+
+
+
     compras=invertido('EUR')
     valor_de_compra=compras-ventas
     
